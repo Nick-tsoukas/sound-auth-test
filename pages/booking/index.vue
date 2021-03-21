@@ -1,0 +1,225 @@
+<template>
+  <div>
+    <section class="hero">
+      <h1>Welcome To The Booking Page</h1>
+    </section>
+
+    <section class="form_group">
+      <div class="mar_bot">
+        <label style="margin-right: 3em; min-width: 200px;">Date</label>
+        <date-picker v-model="date" valueType="format"></date-picker>
+      </div>
+      <div class="mar_bot">
+        <label style="margin-right: 3em;min-width: 200px;">Time</label>
+        <date-picker v-model="time" :disabled="date ? false : true" valueType="timestamp" :hour-options="[1,2,3]" :time-picker-options="{start: '00:00', step:'01:00' , end: '7:00', format: 'HH:mm' }" type="time"></date-picker>
+      </div>
+    </section>
+
+    <section class="body_container">
+      <div v-if="date">
+        <h3 style="margin-bottom: 1em;">Your booking request details are below</h3>
+          <p>Date : {{date}}</p>
+          <p :class="{'red' : !time}">Time : {{time ? $moment(time).format('h:mm:ss a') : 'Must Pick A Time'}}</p>
+          <button style="margin-top: 1em;" class="btn" @click="send">Make Booking Request</button>
+      </div>
+    </section>
+    <section>
+    </section>
+    <section v-if="popup" class="overlay_signup">
+      
+      <div class="popup">
+        <div v-if="authComp == 'SignupInput'">
+          <SignupInput v-on:change="changeLoginScreen" />
+        </div>
+        <div  v-if="authComp == 'LoginInput'">
+          <LoginInput v-on:change="changeLoginScreen" />
+        </div>
+        <button @click="closePop" class="close_button">Close</button>
+      </div>
+    </section>
+  </div>
+</template>
+
+<script>
+  import DatePicker from 'vue2-datepicker';
+  import SignupInput from '../../components/SignupInput/SignupInput';
+  import LoginInput from '../../components/LoginInput/LoginInput';
+  import {
+    mapMutations
+  } from 'vuex'
+  import 'vue2-datepicker/index.css';
+  import axios from '@nuxtjs/axios'
+  export default {
+    created() {
+      this.$store.dispatch('getBooks');
+    },
+    components: {
+      DatePicker,
+      SignupInput,
+      LoginInput
+    },
+    data() {
+      return {
+        authComp: 'SignupInput',
+        date: null,
+        time: null,
+        userId: 'hello',
+        popup: false,
+        name: 'test'
+      };
+    },
+    computed: {
+    books () {
+      return this.$store.state.books
+    }
+  },
+    methods: {
+      changeLoginScreen(data){
+        this.authComp = data;
+      },
+      closePop() {
+        this.popup = false;
+      },
+      send: async function () {
+        const value = await this.$store.dispatch('checkToken');
+        if (!value) {
+          return this.popup = true
+        } else {
+          this.$store.dispatch('sendBooking', {
+            date: this.date,
+            time: this.time,
+            userId: this.userId
+          });
+        }
+      },
+
+      async signUp(val) {
+        try {
+          this.$axios.$post('http://localhost:8000/signup', {
+            ...val
+          }).then((user) => {
+            this.$store.dispatch('setAuth', user);
+            if (user.token) {
+              this.userId = user.user._id;
+              this.popup = false;
+            }
+          })
+        } catch (error) {
+          return console.log(error);
+        }
+      },
+      async logIn(val) {
+        try {
+          this.$axios.$post('http://localhost:8000/signup', {
+            ...val
+          }).then((user) => {
+            this.$store.dispatch('setAuth', user);
+            if (user.token) {
+              this.userId = user.user._id;
+              this.popup = false;
+            }
+          })
+        } catch (error) {
+          return console.log(error);
+        }
+      }
+    },
+    ...mapMutations({
+      //  setBooks: 'setBooks',
+      setAuth: 'setAuth'
+
+    }),
+
+
+  }
+
+</script>
+
+<style scoped>
+  .btn {
+    background: black;
+    color: white;
+    padding : 1.5em 3em;
+  }
+  .close_button {
+    padding: 2em 3em;
+    background-color: black;
+    color: white;
+    border: 1px solid red;
+  }
+
+  .popup {
+    width: 500px;
+    height: 500px;
+    background: white;
+    color: black;
+    z-index: 999999999999999999;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+  }
+
+  .overlay_signup {
+    height: 100vh;
+    width: 100%;
+    z-index: 999999;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: rgba(0, 0, 0, 0.33);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .red {
+    color: red;
+  }
+
+  .body_container {
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .hero {
+    height: 200px;
+    width: 100%;
+    margin-bottom: 3em;
+    background: black;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .form_group {
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    max-width: 800px;
+    margin-bottom: 2em;
+  }
+
+  .mar_bot {
+    margin-bottom: 2em;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .buttons_container {
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  /* 
+ <!-- this is the login modal -->
+      <!-- <div class="container flex_row flex_center">
+      <LoginInput v-on:submit-form="signUp" />
+    </div> -->
+ */
+
+</style>
