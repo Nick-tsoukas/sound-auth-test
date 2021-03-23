@@ -21,8 +21,9 @@ export const state = () => ({
       console.log('this is from the send booking dispatch', data)
     },
     setAuthState(state, data){
-      this.state.userId = data.user._id;
+      this.state.userId = data.userId;
       this.state.token = data.token;
+      console.log("the state has been set from the setAuthState mutation")
     },
     addBook(state,data){
       state.books.push(data);

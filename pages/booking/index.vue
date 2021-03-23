@@ -29,10 +29,10 @@
       
       <div class="popup">
         <div v-if="authComp == 'SignupInput'">
-          <SignupInput v-on:change="changeLoginScreen" />
+          <SignupInput v-on:submit-form="signUp" v-on:change="changeLoginScreen" />
         </div>
         <div  v-if="authComp == 'LoginInput'">
-          <LoginInput v-on:change="changeLoginScreen" />
+          <LoginInput v-on:submit-form="logIn" v-on:change="changeLoginScreen" />
         </div>
         <button @click="closePop" class="close_button">Close</button>
       </div>
@@ -63,23 +63,27 @@
         authComp: 'SignupInput',
         date: null,
         time: null,
-        userId: 'hello',
+        userId: '',
         popup: false,
-        name: 'test'
       };
     },
     computed: {
     books () {
-      return this.$store.state.books
+      return this.$store.state.books;
     }
   },
     methods: {
       changeLoginScreen(data){
         this.authComp = data;
       },
+      log(data) {
+        console.log('this is the submit form event with the data', data);
+      }
+      ,
       closePop() {
         this.popup = false;
       },
+      // sends the booking request if user has jwt token. Also, opems the popup
       send: async function () {
         const value = await this.$store.dispatch('checkToken');
         if (!value) {
@@ -92,11 +96,11 @@
           });
         }
       },
-
-      async signUp(val) {
+      // Sign Up takes form data then sends to route signup. Dispatch setAuth function that sets the jwt token.
+      async signUp(user) {
         try {
           this.$axios.$post('http://localhost:8000/signup', {
-            ...val
+            ...user
           }).then((user) => {
             this.$store.dispatch('setAuth', user);
             if (user.token) {
@@ -108,29 +112,31 @@
           return console.log(error);
         }
       },
-      async logIn(val) {
+      // Does the same as above. Need to add the login route next
+      async logIn(user) {
         try {
-          this.$axios.$post('http://localhost:8000/signup', {
-            ...val
+          this.$axios.$post('http://localhost:8000/login', {
+            ...user
           }).then((user) => {
-            this.$store.dispatch('setAuth', user);
+            console.log(user, 'from the front')
+             this.$store.dispatch('setAuth', user);
             if (user.token) {
-              this.userId = user.user._id;
+              console.log('I have a user here')
+              this.userId = user.userId;
               this.popup = false;
             }
+            
           })
         } catch (error) {
+          console.log('there is an error')
           return console.log(error);
         }
       }
     },
+    // makes available in the template
     ...mapMutations({
-      //  setBooks: 'setBooks',
       setAuth: 'setAuth'
-
     }),
-
-
   }
 
 </script>
