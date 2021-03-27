@@ -1,9 +1,7 @@
 <template>
   <div>
-    <section class="hero">
-      <h1>Welcome To The Booking Page</h1>
-    </section>
-
+    <Hero backgroundColor="black" title="Welcome to the booking page" />
+    <h2 class="text_center">Select time and date to make a booking request</h2>
     <section class="form_group">
       <div class="mar_bot">
         <label style="margin-right: 3em; min-width: 200px;">Date</label>
@@ -14,25 +12,22 @@
         <date-picker v-model="time" :disabled="date ? false : true" valueType="timestamp" :hour-options="[1,2,3]" :time-picker-options="{start: '00:00', step:'01:00' , end: '7:00', format: 'HH:mm' }" type="time"></date-picker>
       </div>
     </section>
-
     <section class="body_container">
       <div v-if="date">
-        <h3 style="margin-bottom: 1em;">Your booking request details are below</h3>
-          <p>Date : {{date}}</p>
-          <p :class="{'red' : !time}">Time : {{time ? $moment(time).format('h:mm:ss a') : 'Must Pick A Time'}}</p>
-          <button style="margin-top: 1em;" class="btn" @click="send">Make Booking Request</button>
+        <RequestDetails :send="send" :time="time" :date="date" />
       </div>
     </section>
-    <section>
+    <section ></section>
+    <section v-if="userBooks"  class="body_container">
+      <UserBookingList :books="userBooks" />
     </section>
     <section v-if="popup" class="overlay_signup">
-      
       <div class="popup">
         <div v-if="authComp == 'SignupInput'">
           <SignupInput v-on:submit-form="signUp" v-on:change="changeLoginScreen" />
         </div>
         <div  v-if="authComp == 'LoginInput'">
-          <LoginInput v-on:submit-form="logIn" v-on:change="changeLoginScreen" />
+          <LoginInput page="booking" v-on:submit-form="logIn" v-on:change="changeLoginScreen" />
         </div>
         <button @click="closePop" class="close_button">Close</button>
       </div>
@@ -49,10 +44,8 @@
   } from 'vuex'
   import 'vue2-datepicker/index.css';
   import axios from '@nuxtjs/axios'
+  import { mapState } from 'vuex'
   export default {
-    created() {
-      this.$store.dispatch('getBooks');
-    },
     components: {
       DatePicker,
       SignupInput,
@@ -63,15 +56,17 @@
         authComp: 'SignupInput',
         date: null,
         time: null,
-        userId: '',
         popup: false,
       };
     },
-    computed: {
-    books () {
-      return this.$store.state.books;
-    }
-  },
+      computed: mapState({
+    firstname: state => state.firstname,
+    lastname: state => state.lastname,
+    userId: state => state.userId,
+    userBooks : state => state.userBooks,
+    email: state => state.email,
+    phonenumber : state => state.phonenumber
+  }),
     methods: {
       changeLoginScreen(data){
         this.authComp = data;
@@ -107,7 +102,7 @@
               this.userId = user.user._id;
               this.popup = false;
             }
-          })
+          });
         } catch (error) {
           return console.log(error);
         }
@@ -118,17 +113,14 @@
           this.$axios.$post('http://localhost:8000/login', {
             ...user
           }).then((user) => {
-            console.log(user, 'from the front')
-             this.$store.dispatch('setAuth', user);
+             this.$store.dispatch('setAuthLogin', user);
             if (user.token) {
-              console.log('I have a user here')
+              console.log('I have a user here');
               this.userId = user.userId;
               this.popup = false;
             }
-            
           })
         } catch (error) {
-          console.log('there is an error')
           return console.log(error);
         }
       }
@@ -180,9 +172,6 @@
     align-items: center;
   }
 
-  .red {
-    color: red;
-  }
 
   .body_container {
     max-width: 800px;
@@ -190,16 +179,6 @@
     margin-right: auto;
   }
 
-  .hero {
-    height: 200px;
-    width: 100%;
-    margin-bottom: 3em;
-    background: black;
-    color: white;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
 
   .form_group {
     margin-left: auto;
@@ -207,6 +186,7 @@
     display: flex;
     max-width: 800px;
     margin-bottom: 2em;
+    justify-content: center;
   }
 
   .mar_bot {
@@ -221,11 +201,5 @@
     margin-right: auto;
   }
 
-  /* 
- <!-- this is the login modal -->
-      <!-- <div class="container flex_row flex_center">
-      <LoginInput v-on:submit-form="signUp" />
-    </div> -->
- */
 
 </style>

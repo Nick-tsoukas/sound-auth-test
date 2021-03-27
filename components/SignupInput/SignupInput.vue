@@ -3,6 +3,12 @@
     <h1 style="text-align: center;">Sign Up</h1>
     <label for="email">Email</label>
     <input class="input" type="text" v-model="email">
+     <label for="email">First name</label>
+    <input class="input" type="text" v-model="firstName">
+     <label for="email">Last name</label>
+    <input class="input" type="text" v-model="lastName">
+     <label for="email">Phone number</label>
+    <input class="input" type="tel" v-model="phoneNumber">
     <label for="password">Password</label>
     <input class="input" type="text" v-model="password">
     <button class="btn" @click="submitForm" type="button"> Sign up </button>
@@ -22,12 +28,15 @@
     data() {
       return {
         email: '',
-        password: ''
+        password: '',
+        firstName: '',
+        lastName: '',
+        phoneNumber: ''
       }
     },
     methods: {
         submitForm(){
-            this.$emit('submit-form', {email: this.email, password: this.password});
+            this.$emit('submit-form', {email: this.email, password: this.password, firstName: this.firstName, lastName: this.lastName, phoneNumber: this.phoneNumber});
         },
         change(){
           this.$emit('change','LoginInput')

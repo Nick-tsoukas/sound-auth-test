@@ -14,10 +14,12 @@ export default {
       { hid: 'description', name: 'description', content: '' }
     ],
     link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
+      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+      { rel: 'stylesheet', type: 'text/css', href: 'https://cdn.jsdelivr.net/npm/@braid/vue-formulate@2.5.2/dist/snow.css' }
+
     ]
   },
-
+  
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: [
   ],
@@ -31,9 +33,19 @@ export default {
 
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
   buildModules: [
-    '@nuxtjs/moment'
+    '@nuxtjs/moment',
+    '@braid/vue-formulate/nuxt',
+    '@nuxtjs/google-fonts',
   ],
-
+  googleFonts: {
+    families: {
+      inter: true,
+      Raleway: {
+        wght: [100, 400],
+        ital: [100]
+      },
+    }
+  },
   moment: {
     defaultTimezone: 'America/Chicago'
   },
