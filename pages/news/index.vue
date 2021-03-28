@@ -5,42 +5,20 @@
            <p class="center">From the blog</p>
        </section>
        <section>
-           <PostListMobile :posts="posts" />
+           <!-- <PostListMobile :posts="posts" /> -->
+           <p :v-for="(post, index) in posts" :key="index">{{post.title}}</p>
        </section>
     </div>
 </template>
 
 <script>
     export default {
-        data(){
-            return {
-                posts : [
-                    {   image: 'assets/images/band_one.jpeg',
-                        title: 'Rockfest',
-                        previewText: 'Something in the water',
-                        body: 'Need the proper sutido and euipment to preform live over stream. Live Sound Compond has you covered. With are 800 sq ft studio we can stream to your most popu.ar chanle so on and so forth'
-                    },
-                     {
-                        image: 'assets/images/band_one.jpeg',
-                        title: 'Rockfest',
-                        previewText: 'Something in the water',
-                        body: 'Need the proper sutido and euipment to preform live over stream. Live Sound Compond has you covered. With are 800 sq ft studio we can stream to your most popu.ar chanle so on and so forth'
-                    },
-                     {
-                        image: 'assets/images/band_one.jpeg',
-                        title: 'Rockfest',
-                        previewText: 'Something in the water',
-                        body: 'Need the proper sutido and euipment to preform live over stream. Live Sound Compond has you covered. With are 800 sq ft studio we can stream to your most popu.ar chanle so on and so forth'
-                    },
-                     {
-                        image: 'assets/images/band_one.jpeg',
-                        title: 'Rockfest',
-                        previewText: 'Something in the water',
-                        body: 'Need the proper sutido and euipment to preform live over stream. Live Sound Compond has you covered. With are 800 sq ft studio we can stream to your most popu.ar chanle so on and so forth'
-                    }
-                ]
-            }
-        }
+       async asyncData({ $content }) {
+       const posts = await $content("blog").fetch();
+        return {
+            posts,
+        };
+        },
     }
 </script>
 
@@ -52,3 +30,6 @@
         text-align: center;
     }
 </style>
+
+
+ 
