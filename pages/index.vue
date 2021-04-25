@@ -51,7 +51,7 @@
         <p style="font-size: 24px;">Studio Space Located in Chicago, IL</p>
       </div>
     </section>
-    <section class="social_header">
+    <section class="social_header desk_view_hide">
       <div style="display: grid; grid-template-columns: 1fr 1fr;">
         <div></div>
         <div style="display: grid; grid-template-columns: 1fr 1fr; margin-top: 2em; padding-bottom: 150px">
@@ -98,7 +98,7 @@
     </section>
 
     <!-- ============ under intro header desktop ========== -->
-    <section style="display: grid; grid-template-columns: 1fr 1fr;">
+    <section class="desk_view_hide" style="display: grid; grid-template-columns: 1fr 1fr;">
       <div>
         <img src="~/assets/images/musicImage.jpeg" alt="">
       </div>
@@ -113,7 +113,7 @@
         </div>
       </div>
     </section>
-    <section style="display: grid; grid-template-columns: 1fr 1fr; padding-bottom: 3em;">
+    <section class="desk_view_hide" style="display: grid; grid-template-columns: 1fr 1fr; padding-bottom: 3em;">
       <div style="padding-left: 3em; margin-top: 3em;">
         <h1>Our Services</h1>
         <div>
@@ -126,6 +126,7 @@
       </div>
     </section>
     <section
+    class="desk_view_hide"
       style="min-height: 600px; background: black; display: grid;grid-template-columns: 1fr 1fr 1fr; justify-content: center;">
       <div style="align-self: center; justify-slef: center;">
         <div style="display: flex; align-items: center; justify-content: center; flex-direction: column;">
@@ -163,6 +164,7 @@
     </section>
 
     <section
+    class="desk_view_hide"
       style="padding-bottom: 5em; background: black; display: grid;grid-template-columns: 1fr 1fr 1fr; justify-content: center; padding-left: 6em; color: white;">
       <div>
         <img src="~/assets/images/soundWaveTwo.svg" alt="">
@@ -392,7 +394,6 @@
   .container {
     width: 100%;
     display: none;
-    background-color: yellow;
   }
 
   .red {
@@ -430,7 +431,16 @@
     .desk_view {
       display: none !important;
     }
+
+    .desk_view_hide {
+      display: none !important;
+    }
   }
 
+  @media only screen and (min-width: 700px) {
+    .show_large {
+      display: block;
+    }
+  }
 
 </style>

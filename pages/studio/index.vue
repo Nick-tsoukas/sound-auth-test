@@ -56,18 +56,18 @@
         </button>
       </div>
     </section>
-    <section style="padding-left: 3em; padding-right: 3em;" class="desk_card_container">
+    <section style="padding-left: 3em; padding-right: 3em;" class="desk_card_container desk_view_hide">
       <StudioCard title="Live Streaming" />
       <StudioCard title="Video Editing" />
       <StudioCard title="Digital Effects" />
     </section>
     <!-- cta for desktop  -->
-    <section class="dct">
+    <section class="dct desk_view_hide">
         <!-- <div class="cta_image_container">
           <img class="cta_image" src="~/assets/images/band_four.jpeg" alt="Band playing music">
           <div class="overlay"></div>
         </div> -->
-        <div class="form_container">
+        <div class="form_container desk_view_hide">
           <h2>Let's Work Together</h2>
           <p>Need the proper sutido and euipment to preform live over stream. Live Sound Compond has you covered. With
             are 800 sq ft studio we can stream to your most popu.ar chanle so on and so forth</p>
@@ -83,7 +83,7 @@
             v-model="message" />
           <button class="sub shadow">Submit</button>
         </div>
-       <section class="cta_im_d">
+       <section class="cta_im_d desk_view_hide">
        </section>
       </section>
   </div>

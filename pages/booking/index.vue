@@ -41,7 +41,7 @@
     <!-- ========== mobile view ends here =============== -->
 
     <!-- Desktop view -->
-    <div class="desktop_view">
+    <div class="desktop_view desk_view_hide h">
 
       <Hero backgroundColor="black" title="Welcome to the booking page" />
 
@@ -246,10 +246,18 @@
 
   @media only screen and (max-width: 600px) {
     .desktop_view {
-      display: none;
+      display: none !important;
+    }
+    .h {
+      display: none !important;
     }
   }
 
+ @media only screen and (min-width: 650px) {
+    .h {
+      display: none !important;
+    }
+  }
 
   @media only screen and (max-width: 600px) {
     .form_group {
@@ -258,7 +266,7 @@
       margin-top: 2em;
     }
     .m {
-      display: none;
+      display: block;
     }
   }
 
