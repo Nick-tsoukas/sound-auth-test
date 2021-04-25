@@ -91,4 +91,12 @@
     justify-content: flex-end;
   }
 
+  /* media query */
+
+  @media only screen and (min-width: 800px) {
+  .footer_container {
+    padding-left: 7em;
+  }
+}
+
 </style>

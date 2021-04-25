@@ -1,37 +1,83 @@
 <template>
   <div>
-    <Hero backgroundColor="black" title="Welcome to the booking page" />
-    <h2 class="text_center">Select time and date to make a booking request</h2>
-    <section class="form_group">
-      <div class="mar_bot">
-        <label style="margin-right: 3em; min-width: 200px;">Date</label>
-        <date-picker v-model="date" valueType="format"></date-picker>
+
+    <!-- mobile view booking details -->
+    <div class="m">
+      <Hero style="height: 100px" backgroundColor="black" title="Book an appointment" />
+      <section>
+        <h3 class="text_center">Choose a date and time</h3>
+        <section class="form_group">
+          <div class="mar_bot">
+            <label style="margin-right: 3em; min-width: 200px;">Date</label>
+            <date-picker v-model="date" valueType="format"></date-picker>
+          </div>
+          <div class="mar_bot">
+            <label style="margin-right: 3em;min-width: 200px;">Time</label>
+            <date-picker v-model="time" :disabled="date ? false : true" valueType="timestamp" :hour-options="[1,2,3]"
+              :time-picker-options="{start: '00:00', step:'01:00' , end: '7:00', format: 'HH:mm' }" type="time">
+            </date-picker>
+          </div>
+        </section>
+      </section>
+      <div class="mar_auto">
+        <section class="body_container">
+          <div v-if="date">
+            <RequestDetails :send="send" :time="time" :date="date" />
+          </div>
+        </section>
       </div>
-      <div class="mar_bot">
-        <label style="margin-right: 3em;min-width: 200px;">Time</label>
-        <date-picker v-model="time" :disabled="date ? false : true" valueType="timestamp" :hour-options="[1,2,3]" :time-picker-options="{start: '00:00', step:'01:00' , end: '7:00', format: 'HH:mm' }" type="time"></date-picker>
-      </div>
-    </section>
-    <section class="body_container">
-      <div v-if="date">
-        <RequestDetails :send="send" :time="time" :date="date" />
-      </div>
-    </section>
-    <section ></section>
-    <section v-if="userBooks"  class="body_container">
-      <UserBookingList :books="userBooks" />
-    </section>
-    <section v-if="popup" class="overlay_signup">
-      <div class="popup">
-        <div v-if="authComp == 'SignupInput'">
-          <SignupInput v-on:submit-form="signUp" v-on:change="changeLoginScreen" />
+      <section v-if="popup" class="overlay_signup">
+        <div class="popup">
+          <div v-if="authComp == 'SignupInput'">
+            <SignupInput v-on:submit-form="signUp" v-on:change="changeLoginScreen" />
+          </div>
+          <div v-if="authComp == 'LoginInput'">
+            <LoginInput page="booking" v-on:submit-form="logIn" v-on:change="changeLoginScreen" />
+          </div>
+          <button @click="closePop" class="close_button">Close</button>
         </div>
-        <div  v-if="authComp == 'LoginInput'">
-          <LoginInput page="booking" v-on:submit-form="logIn" v-on:change="changeLoginScreen" />
+      </section>
+    </div>
+    <!-- ========== mobile view ends here =============== -->
+
+    <!-- Desktop view -->
+    <div class="desktop_view">
+
+      <Hero backgroundColor="black" title="Welcome to the booking page" />
+
+      <h2 class="text_center">Select time and date to make a booking request</h2>
+      <section class="form_group">
+        <div class="mar_bot">
+          <label style="margin-right: 3em; min-width: 200px;">Date</label>
+          <date-picker v-model="date" valueType="format"></date-picker>
         </div>
-        <button @click="closePop" class="close_button">Close</button>
-      </div>
-    </section>
+        <div class="mar_bot">
+          <label style="margin-right: 3em;min-width: 200px;">Time</label>
+          <date-picker v-model="time" :disabled="date ? false : true" valueType="timestamp" :hour-options="[1,2,3]"
+            :time-picker-options="{start: '00:00', step:'01:00' , end: '7:00', format: 'HH:mm' }" type="time">
+          </date-picker>
+        </div>
+      </section>
+      <section class="body_container">
+        <div v-if="date">
+          <RequestDetails :send="send" :time="time" :date="date" />
+        </div>
+      </section>
+      <section v-if="userBooks" class="body_container">
+        <UserBookingList :books="userBooks" />
+      </section>
+      <section v-if="popup" class="overlay_signup">
+        <div class="popup">
+          <div v-if="authComp == 'SignupInput'">
+            <SignupInput v-on:submit-form="signUp" v-on:change="changeLoginScreen" />
+          </div>
+          <div v-if="authComp == 'LoginInput'">
+            <LoginInput page="booking" v-on:submit-form="logIn" v-on:change="changeLoginScreen" />
+          </div>
+          <button @click="closePop" class="close_button">Close</button>
+        </div>
+      </section>
+    </div>
   </div>
 </template>
 
@@ -44,7 +90,9 @@
   } from 'vuex'
   import 'vue2-datepicker/index.css';
   import axios from '@nuxtjs/axios'
-  import { mapState } from 'vuex'
+  import {
+    mapState
+  } from 'vuex'
   export default {
     components: {
       DatePicker,
@@ -59,22 +107,21 @@
         popup: false,
       };
     },
-      computed: mapState({
-    firstname: state => state.firstname,
-    lastname: state => state.lastname,
-    userId: state => state.userId,
-    userBooks : state => state.userBooks,
-    email: state => state.email,
-    phonenumber : state => state.phonenumber
-  }),
+    computed: mapState({
+      firstname: state => state.firstname,
+      lastname: state => state.lastname,
+      userId: state => state.userId,
+      userBooks: state => state.userBooks,
+      email: state => state.email,
+      phonenumber: state => state.phonenumber
+    }),
     methods: {
-      changeLoginScreen(data){
+      changeLoginScreen(data) {
         this.authComp = data;
       },
       log(data) {
         console.log('this is the submit form event with the data', data);
-      }
-      ,
+      },
       closePop() {
         this.popup = false;
       },
@@ -113,7 +160,7 @@
           this.$axios.$post('http://localhost:8000/login', {
             ...user
           }).then((user) => {
-             this.$store.dispatch('setAuthLogin', user);
+            this.$store.dispatch('setAuthLogin', user);
             if (user.token) {
               console.log('I have a user here');
               this.userId = user.userId;
@@ -134,11 +181,13 @@
 </script>
 
 <style scoped>
+
   .btn {
     background: black;
     color: white;
-    padding : 1.5em 3em;
+    padding: 1.5em 3em;
   }
+
   .close_button {
     padding: 2em 3em;
     background-color: black;
@@ -189,17 +238,28 @@
     justify-content: center;
   }
 
-  .mar_bot {
-    margin-bottom: 2em;
-    display: flex;
-    flex-direction: column;
-  }
-
   .buttons_container {
     max-width: 500px;
     margin-left: auto;
     margin-right: auto;
   }
 
+  @media only screen and (max-width: 600px) {
+    .desktop_view {
+      display: none;
+    }
+  }
+
+
+  @media only screen and (max-width: 600px) {
+    .form_group {
+      flex-direction: column;
+      align-items: center;
+      margin-top: 2em;
+    }
+    .m {
+      display: none;
+    }
+  }
 
 </style>

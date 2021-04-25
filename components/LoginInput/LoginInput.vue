@@ -57,7 +57,7 @@
   }
 
   .form_group {
-    min-width: 400px;
+
   }
 
   .input {
@@ -67,5 +67,13 @@
   label {
     padding-bottom: .5em;
   }
+
+  /* media queries */
+
+  @media only screen and (min-width: 1000px) {
+  .form_group {
+    min-width: 400px;
+  }
+}
 
 </style>

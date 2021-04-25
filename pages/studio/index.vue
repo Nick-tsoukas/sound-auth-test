@@ -30,41 +30,113 @@
           <h2>Let's Work Together</h2>
           <p>Need the proper sutido and euipment to preform live over stream. Live Sound Compond has you covered. With
             are 800 sq ft studio we can stream to your most popu.ar chanle so on and so forth</p>
-          <FormulateInput type="text" label="Frist Name" validation="required" error-behavior="blur" v-model="firstname" />
-          <FormulateInput type="text" label="Last Name" validation="required" error-behavior="blur" v-model="lastname" />
-          <FormulateInput type="email" label="email" v-model="email" validation="required|email" error-behavior="blur" />
-          <FormulateInput type="tel" label="Last Name" validation="required" error-behavior="blur" v-model="phonenumber" />
-          <FormulateInput type="textarea" label="message" validation="required" error-behavior="blur" v-model="message" />
+          <FormulateInput type="text" label="Frist Name" validation="required" error-behavior="blur"
+            v-model="firstname" />
+          <FormulateInput type="text" label="Last Name" validation="required" error-behavior="blur"
+            v-model="lastname" />
+          <FormulateInput type="email" label="email" v-model="email" validation="required|email"
+            error-behavior="blur" />
+          <FormulateInput type="tel" label="Last Name" validation="required" error-behavior="blur"
+            v-model="phonenumber" />
+          <FormulateInput type="textarea" label="message" validation="required" error-behavior="blur"
+            v-model="message" />
           <button class="sub shadow">Submit</button>
         </div>
       </section>
     </section>
+    <!-- desktop view  -->
+    <section class="desk_view_header">
+      <div class="top_header">
+        <p class="pre_title">Our Studio</p>
+        <h2>Live Sound Compound</h2>
+        <p class="header_body_text">Our Studio, located in Chicago, we have the equipment, man power, and technology to
+          suit your digital needs. Contact us with any questions</p>
+        <button style="margin-left: 6em;" class="btn shadow">
+          <nuxt-link class="link_style" to="/contact">Contact Us Now</nuxt-link>
+        </button>
+      </div>
+    </section>
+    <section style="padding-left: 3em; padding-right: 3em;" class="desk_card_container">
+      <StudioCard title="Live Streaming" />
+      <StudioCard title="Video Editing" />
+      <StudioCard title="Digital Effects" />
+    </section>
+    <!-- cta for desktop  -->
+    <section class="dct">
+        <!-- <div class="cta_image_container">
+          <img class="cta_image" src="~/assets/images/band_four.jpeg" alt="Band playing music">
+          <div class="overlay"></div>
+        </div> -->
+        <div class="form_container">
+          <h2>Let's Work Together</h2>
+          <p>Need the proper sutido and euipment to preform live over stream. Live Sound Compond has you covered. With
+            are 800 sq ft studio we can stream to your most popu.ar chanle so on and so forth</p>
+          <FormulateInput type="text" label="Frist Name" validation="required" error-behavior="blur"
+            v-model="firstname" />
+          <FormulateInput type="text" label="Last Name" validation="required" error-behavior="blur"
+            v-model="lastname" />
+          <FormulateInput type="email" label="email" v-model="email" validation="required|email"
+            error-behavior="blur" />
+          <FormulateInput type="tel" label="Last Name" validation="required" error-behavior="blur"
+            v-model="phonenumber" />
+          <FormulateInput type="textarea" label="message" validation="required" error-behavior="blur"
+            v-model="message" />
+          <button class="sub shadow">Submit</button>
+        </div>
+       <section class="cta_im_d">
+       </section>
+      </section>
   </div>
 </template>
 
 <script>
   export default {
-      data() {
-          return {
-              firstname: '',
-              lastname: '',
-              email: '',
-              phonenumber: '',
-              message: ''
-          }
+    data() {
+      return {
+        firstname: '',
+        lastname: '',
+        email: '',
+        phonenumber: '',
+        message: ''
       }
+    }
   }
 
 </script>
 
 <style scoped>
+  /* desk style */
+
+.cta_im_d {
+  background-image: url('~assets/images/band_four.jpeg');
+  background-position: center cnter;
+  background-size: cover;
+  background-repeat: no-repeat;
+
+}
+.dct {
+    padding-top: 3em;
+    padding-bottom: 3em;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+  .desk_card_container {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+
+  .desk_view_header {
+    height: 350px;
+  }
+
   /* mobile styles */
-    .sub {
-        background: #FF6A00;
-        border: none;
-        color: white;
-        padding: 1em 1.5em;
-    }
+  .sub {
+    background: #FF6A00;
+    border: none;
+    color: white;
+    padding: 1em 1.5em;
+  }
+
   .form_container {
     padding-left: 2em;
     padding-right: 2em;
@@ -130,6 +202,29 @@
     color: white;
     border: none;
     padding: 1em 1.5em;
+  }
+
+
+  @media only screen and (min-width: 600px) {
+    .mobile_container {
+      display: none !important;
+    }
+
+    .top_header {
+      position: relative;
+      background-image: url('~assets/images/band_four.jpeg');
+      color: white;
+      border-bottom: 5px solid #FF6A00;
+      background-size: cover;
+      background-position: center center;
+      padding-left: 7em;
+      padding-top: 3em;
+    }
+    .form_container {
+      padding-left: 4em;
+      padding-right: 4em;
+    }
+   
   }
 
 </style>

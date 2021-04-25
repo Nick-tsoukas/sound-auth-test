@@ -9,7 +9,9 @@
       <p>Need the proper sutido and euipment to preform live over stream. Live Sound Compond has you covered. With are 800 sq ft studio we can stream to your most popu.ar chanle so on and so forth</p>
     </div>
     <div class="card_btns">
-      <button class="btn shadow"><nuxt-link class="link_style" to="/booking">Book Now</nuxt-link></button>
+      <nuxt-link class="link_style" to="/booking">
+      <button class="btn shadow">Book Now</button>
+      </nuxt-link>
     </div>
   </div>
 </template>
@@ -83,5 +85,23 @@
   .card_image_container {
     position: relative;
   }
+
+  @media only screen and (min-width: 650px) {
+  .card_image {
+    max-width: 350px;
+  }
+
+  .card_image_container {
+    max-width: 350px;
+  }
+
+  .main_card {
+    max-width: 350px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+
 
 </style>

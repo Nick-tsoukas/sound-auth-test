@@ -109,11 +109,6 @@
     padding: 1em;
   }
 
-  .hide {
-    display: none;
-    height: 0px;
-  }
-
   .show {
     display: block !important;
     height: auto !important;
@@ -133,10 +128,6 @@
     padding-left: 1em;
   }
 
-  .arrow {
-    padding-right: 1em;
-    transition: all;
-  }
 
   .list_name {
     margin-left: 1em;

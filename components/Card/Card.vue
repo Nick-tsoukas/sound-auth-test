@@ -1,11 +1,11 @@
 <template>
-    <div class="main_card">
+    <div style="margin-bottom: 3em;" class="margin_bot_3">
         <div class="card_image_container">
             <img class="card_image shadow" src="~/assets/images/band_one.jpeg" alt="">
             <div class="icon_container shadow"> <img src="~/assets/images/serviceIcon.svg" alt=""></div>
         </div>
         <div class="card_body">
-            <h3 class="title"> {{title}} </h3>
+            <h3 class="margin_top_2"> {{title}} </h3>
             <ul class="list">
                 <li class="list_style" v-for="text in body" :key="text">
                    <div class="dash shadow"></div> {{text}}
@@ -29,10 +29,6 @@
 </script>
 
 <style  scoped>
-
-.title {
-    margin-top: 2em;
-}
 .icon_container {
     width: 30px;
     background: #FF6A00;
@@ -46,40 +42,18 @@
     left: 10px;
 
 }
-.main_card {
-    margin-bottom: 3em;
-}
-
-.orange {
-        background-color: #FF6A00;
-}
 .or_border {
     border-radius: 5%;
     border: 3px solid #FF6A00;
-}
-.dash {
-    display: inline-block;
-    width:10px;
-    height: 3px;
-    background-color: #FF6A00;
-    margin-right: 1em;
-}
-.list {
-    padding-left: 10px;
-}
-.list_style {
-    list-style: none;
-    display: flex;
-    align-items: center;
 }
 .card_image {
     max-width: 80vw;
     border-radius: 5%;
     border: 3px solid #FF6A00;
 }
-    .card_image_container {
-        position: relative;
-    }
+.card_image_container {
+    position: relative;
+}
 </style>
 
 
