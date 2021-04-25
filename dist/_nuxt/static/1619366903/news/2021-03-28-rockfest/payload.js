@@ -1,0 +1,1 @@
+__NUXT_JSONP__("/news/2021-03-28-rockfest", {data:[{}],fetch:{},mutations:[]});

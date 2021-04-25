@@ -1,0 +1,1 @@
+__NUXT_JSONP__("/adminlocal", {data:[{}],fetch:{},mutations:[]});
